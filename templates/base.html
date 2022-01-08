@@ -68,14 +68,11 @@
     var rpy = 0;
     var r = 0;
     var p = 0;
-    var y = 0;
     var resp = 0;
     var r_offset = 0;
     var p_offset = 0;
-    var y_offset = 0;
     var rr = 0;
     var pr = 0;
-    var yr = 0;
     function setall(data) {
       temp = data;
       temp = temp.split('[');
@@ -85,22 +82,19 @@
       temp = temp.split(', ');
       rr = parseInt(temp[0]);
       pr = parseInt(temp[1]);
-      yr = parseInt(temp[2]);
       r = (rr + r_offset);
       p = (pr + p_offset);
-      y = (yr + y_offset);
     }
     calibrate.addEventListener('click', () => {
       r_offset = (rr * -1);
       p_offset = (pr * -1);
-      y_offset = ((yr - 180) * -1);
     });
     update.addEventListener('click', () => {
       modelViewerTransform.updateFraming();
       setInterval(function() { 
       getData('http://192.168.0.194:5000/static/rpy.txt')
         .then(data => setall(data));
-      updateOrientation(r, p, y);
+      updateOrientation(r, p);
       modelViewerTransform.updateFraming();
       }, 100);
     });
@@ -111,8 +105,8 @@
       });
       return response.text();
     }
-    const updateOrientation = (r, p, y) => {
-      modelViewerTransform.orientation = (r+"deg "+p+"deg "+y+"deg");
+    const updateOrientation = (r, p) => {
+      modelViewerTransform.orientation = (r+"deg "+p+"deg 180deg");
     };
     </script>
     <!-- Content container -->
