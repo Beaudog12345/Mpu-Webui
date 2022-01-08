@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -12,27 +13,9 @@
     <script nomodule src="https://unpkg.com/@google/model-viewer/dist/model-viewer-legacy.js"></script>
     <title>{% block title %} {% endblock %}</title>
   </head>
-  <script>
-    var y = {{ y|safe }}
-    var p = {{ p|safe }}
-    var r = {{ r|safe }}
-  </script>
   <div id=ajax>
-    <button id="ajaxButton" type="button" onclick="loadDoc()">Update</button>
+    <button id="frame" type="button">Update</button>
   </div>
-  <script>
-    function loadDoc() {
-      string url = document.location.origin;
-      var i = 0
-      setInterval(function() {
-        fetch('http://192.168.0.194:5000/static/x.txt')
-          .then(data => setx(data));
-      }, 1000);
-    }
-    function setx(data) {
-        x = data
-    }
-</script>  
   <!--
   <script>
   function readTextFile(file)
@@ -75,9 +58,50 @@
         <h id="y"></h>
     </div>
     <div id="aSide">
-        <model-viewer orientation="{{ r }}deg {{ p }}deg {{ y }}deg" src="{{ url_for('static', filename= 'assets/plane.gltf') }}" alt="Plane" ios-src="{{ url_for('static', filename= 'assets/plane.gltf') }}"></model-viewer>        
+        <model-viewer id="transform" orientation="0deg 0deg 0deg" src="{{ url_for('static', filename= 'assets/plane.gltf') }}" alt="Plane" ios-src="{{ url_for('static', filename= 'assets/plane.gltf') }}"></model-viewer>        
     </div>
+<!--    <script src="{{ url_for('static', filename= 'update.js') }}"></script> -->
+    <script>
+    const modelViewerTransform = document.querySelector("model-viewer#transform");
+    const frame = document.querySelector('#frame');
+    var r = 0;
+    var p = 0;
+    var y = 0;
+    var resp = 0;
+    function setr(data) {
+      r = data;
+    }
+    function setp(data) {
+      p = data;
+    }
+    function sety(data) {
+      y = data;
+    }
 
+    frame.addEventListener('click', () => {
+      modelViewerTransform.updateFraming();
+      setInterval(function() { 
+      getData('http://192.168.0.194:5000/static/r.txt')
+        .then(data => setr(data));
+      getData('http://192.168.0.194:5000/static/p.txt')
+        .then(data => setp(data));
+      getData('http://192.168.0.194:5000/static/y.txt')
+        .then(data => sety(data));
+      updateOrientation(r, p, y);
+      modelViewerTransform.updateFraming();
+      }, 100);
+    });
+    async function getData(url = '') {
+      const response = await fetch(url, {
+        method: 'GET',
+        cache: 'no-cache',
+      });
+      return response.text();
+    }
+    const updateOrientation = (r, p, y) => {
+      modelViewerTransform.orientation = (r+"deg "+p+"deg "+y+"deg");
+    };
+    </script>
     <!-- Content container -->
     <!-- This is for holding some brief description about the 3D object -->
     <!-- Optional JavaScript -->
