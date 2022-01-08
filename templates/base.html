@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename= 'css/style.css') }}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename= 'images/favicon.ico') }}" />
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <script nomodule src="https://unpkg.com/@google/model-viewer/dist/model-viewer-legacy.js"></script>
+    <title>{% block title %} {% endblock %}</title>
+  </head>
+  <script>
+    var y = {{ y|safe }}
+    var p = {{ p|safe }}
+    var r = {{ r|safe }}
+  </script>
+  <div id=ajax>
+    <button id="ajaxButton" type="button" onclick="loadDoc()">Update</button>
+  </div>
+  <script>
+    function loadDoc() {
+      string url = document.location.origin;
+      var i = 0
+      setInterval(function() {
+        fetch('http://192.168.0.194:5000/static/x.txt')
+          .then(data => setx(data));
+      }, 1000);
+    }
+    function setx(data) {
+        x = data
+    }
+</script>  
+  <!--
+  <script>
+  function readTextFile(file)
+  {
+      var rawFile = new XMLHttpRequest();
+      rawFile.open("GET", file, false);
+      rawFile.onreadystatechange = function ()
+      {
+          if(rawFile.readyState === 4)
+          {
+              if(rawFile.status === 200 || rawFile.status == 0)
+              {
+                  var allText = rawFile.responseText;
+                  alert(allText);
+              }
+          }
+      }
+      rawFile.send(null);
+  }
+  </script>
+ A -->
+  <body>
+<!--
+    <nav class="navbar navbar-expand-md navbar-light bg-light">
+        <a class="navbar-brand" href="{{ url_for('index')}}">Raspberry Pi</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">About</a>
+            </li>
+            </ul>
+        </div>
+    </nav>
+-->
+    <div class="container">
+<!--        <button type="button" onclick="loadDoc()">Update Content</button>-->
+        <h id="y"></h>
+    </div>
+    <div id="aSide">
+        <model-viewer orientation="{{ r }}deg {{ p }}deg {{ y }}deg" src="{{ url_for('static', filename= 'assets/plane.gltf') }}" alt="Plane" ios-src="{{ url_for('static', filename= 'assets/plane.gltf') }}"></model-viewer>        
+    </div>
+
+    <!-- Content container -->
+    <!-- This is for holding some brief description about the 3D object -->
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>

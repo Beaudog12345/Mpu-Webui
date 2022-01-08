@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+<script>
+    var info = {{ info|safe }}
+</script>
+<h1>{% block title %} Atitude Control Panel {% endblock %}</h1>
+{% block content %}
+    <h1>{{ info }}</h1>
+{% endblock %}
+<!--
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename= 'css/style.css') }}">
+    <title>Python website</title>
+</head>
+<script>
+    var name = {{ name|safe }}
+</script>
+<h2> this is passed from python-> {{ name }} </h2>
+</html>
+-->
