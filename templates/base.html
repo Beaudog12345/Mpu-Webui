@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
   <head>
@@ -13,8 +12,9 @@
     <script nomodule src="https://unpkg.com/@google/model-viewer/dist/model-viewer-legacy.js"></script>
     <title>{% block title %} {% endblock %}</title>
   </head>
-  <div id=ajax>
-    <button id="frame" type="button">Update</button>
+  <div id=buttons>
+    <button id="update" type="button">Update</button>
+    <button id="calibrate" type="button">Calibrate</button>
   </div>
   <!--
   <script>
@@ -58,35 +58,48 @@
         <h id="y"></h>
     </div>
     <div id="aSide">
-        <model-viewer id="transform" orientation="0deg 0deg 0deg" src="{{ url_for('static', filename= 'assets/plane.gltf') }}" alt="Plane" ios-src="{{ url_for('static', filename= 'assets/plane.gltf') }}"></model-viewer>        
+        <model-viewer id="transform" orientation="0deg 0deg 180deg" src="{{ url_for('static', filename= 'assets/plane.gltf') }}" alt="Plane" ios-src="{{ url_for('static', filename= 'assets/plane.gltf') }}"></model-viewer>        
     </div>
 <!--    <script src="{{ url_for('static', filename= 'update.js') }}"></script> -->
     <script>
     const modelViewerTransform = document.querySelector("model-viewer#transform");
-    const frame = document.querySelector('#frame');
+    const update = document.querySelector('#update');
+    const calibrate = document.querySelector('#calibrate');
+    var rpy = 0;
     var r = 0;
     var p = 0;
     var y = 0;
     var resp = 0;
-    function setr(data) {
-      r = data;
+    var r_offset = 0;
+    var p_offset = 0;
+    var y_offset = 0;
+    var rr = 0;
+    var pr = 0;
+    var yr = 0;
+    function setall(data) {
+      temp = data;
+      temp = temp.split('[');
+      temp = temp[1];
+      temp = temp.split(']');
+      temp = temp[0];
+      temp = temp.split(', ');
+      rr = parseInt(temp[0]);
+      pr = parseInt(temp[1]);
+      yr = parseInt(temp[2]);
+      r = (rr + r_offset);
+      p = (pr + p_offset);
+      y = (yr + y_offset);
     }
-    function setp(data) {
-      p = data;
-    }
-    function sety(data) {
-      y = data;
-    }
-
-    frame.addEventListener('click', () => {
+    calibrate.addEventListener('click', () => {
+      r_offset = (rr * -1);
+      p_offset = (pr * -1);
+      y_offset = ((yr - 180) * -1);
+    });
+    update.addEventListener('click', () => {
       modelViewerTransform.updateFraming();
       setInterval(function() { 
-      getData('http://192.168.0.194:5000/static/r.txt')
-        .then(data => setr(data));
-      getData('http://192.168.0.194:5000/static/p.txt')
-        .then(data => setp(data));
-      getData('http://192.168.0.194:5000/static/y.txt')
-        .then(data => sety(data));
+      getData('http://192.168.0.194:5000/static/rpy.txt')
+        .then(data => setall(data));
       updateOrientation(r, p, y);
       modelViewerTransform.updateFraming();
       }, 100);
