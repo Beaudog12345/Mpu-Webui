@@ -12,9 +12,12 @@
     <script nomodule src="https://unpkg.com/@google/model-viewer/dist/model-viewer-legacy.js"></script>
     <title>{% block title %} {% endblock %}</title>
   </head>
-  <div id=buttons>
+  <div id=content>
     <button id="update" type="button">Update</button>
     <button id="calibrate" type="button">Calibrate</button>
+      <form action = "http://172.20.10.9:5000/" method = "POST">
+         <button id="ledbutton" type="button">LED</button>
+      </form>   
   </div>
   <!--
   <script>
@@ -65,6 +68,7 @@
     const modelViewerTransform = document.querySelector("model-viewer#transform");
     const update = document.querySelector('#update');
     const calibrate = document.querySelector('#calibrate');
+    const ledbutton = document.querySelector('#ledbutton');
     var rpy = 0;
     var r = 0;
     var p = 0;
@@ -85,6 +89,12 @@
       r = (rr + r_offset);
       p = (pr + p_offset);
     }
+    ledbutton.addEventListener('click', () => {
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", "http://172.20.10.9:5000/", true);
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.send("Hi");
+    });
     calibrate.addEventListener('click', () => {
       r_offset = (rr * -1);
       p_offset = (pr * -1);
@@ -92,7 +102,7 @@
     update.addEventListener('click', () => {
       modelViewerTransform.updateFraming();
       setInterval(function() { 
-      getData('http://192.168.0.194:5000/static/rpy.txt')
+      getData('http://172.20.10.9:5000/static/rpy.txt')
         .then(data => setall(data));
       updateOrientation(r, p);
       modelViewerTransform.updateFraming();
