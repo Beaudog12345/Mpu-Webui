@@ -25,7 +25,7 @@ def index():
 
 @app.after_request
 def add_header(response):
-    response.cache_control.max_age = 300
+    response.cache_control.no-cache
     return response
 
 if __name__ == "__main__":
