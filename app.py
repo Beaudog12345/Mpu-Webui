@@ -25,7 +25,9 @@ def index():
 
 @app.after_request
 def add_header(response):
-    response.cache_control.no-cache
+    # response.cache_control.no_store = True
+    #if 'Cache-Control' not in response.headers:
+    response.headers['Cache-Control'] = 'no-store'
     return response
 
 if __name__ == "__main__":
