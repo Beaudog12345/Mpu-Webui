@@ -15,9 +15,9 @@
   <div id=content>
     <button id="update" type="button">Update</button>
     <button id="calibrate" type="button">Calibrate</button>
-      <form action = "http://172.20.10.9:5000/" method = "POST">
-         <button id="motorbutton" type="button">Motor</button>
-      </form>   
+<!--    <form action = "http://172.20.10.9:5000/" method = "POST">
+       <button id="motorbutton" type="button">Motor</button>
+    </form> -->  
   </div>
   <!--
   <script>
@@ -68,7 +68,7 @@
     const modelViewerTransform = document.querySelector("model-viewer#transform");
     const update = document.querySelector('#update');
     const calibrate = document.querySelector('#calibrate');
-    const motorbutton = document.querySelector('#motorbutton');
+  <!--  const motorbutton = document.querySelector('#motorbutton'); -->
     var rpy = 0;
     var r = 0;
     var p = 0;
@@ -88,13 +88,13 @@
       pr = parseInt(temp[1]);
       r = (rr + r_offset);
       p = (pr + p_offset);
-    }
+    } <!--
     motorbutton.addEventListener('click', () => {
       var xhr = new XMLHttpRequest();
       xhr.open("POST", "http://172.20.10.9:5000/", true);
       xhr.setRequestHeader('Content-Type', 'application/json');
       xhr.send("Hi");
-    });
+    }); -->
     calibrate.addEventListener('click', () => {
       r_offset = (rr * -1);
       p_offset = (pr * -1);
