@@ -40,11 +40,12 @@ bus.write_byte_data(address, power_mgmt_1, 0)
 
 gyroscope_xout = read_word_2c(0x43)
 gyroscope_yout = read_word_2c(0x45)
-gyroscope_zout = read_word_2c(0x47)
- 
+gyroscope_zout = read_word_2c(0x47) 
+
 #print "gyroscope_xout: ", ("%5d" % gyroscope_xout), " scaled: ", (gyroscope_xout / 131)
 #print "gyroscope_yout: ", ("%5d" % gyroscope_yout), " scaled: ", (gyroscope_yout / 131)
 #print "gyroscope_zout: ", ("%5d" % gyroscope_zout), " scaled: ", (gyroscope_zout / 131)
+error2 = True
 while True:
     try:
         acceleration_xout = read_word_2c(0x3b)
@@ -55,11 +56,12 @@ while True:
         acceleration_zout_scaled = acceleration_zout / 16384.0
         xrot = get_x_rotation(acceleration_xout_scaled, acceleration_yout_scaled, acceleration_zout_scaled)
         yrot = get_y_rotation(acceleration_xout_scaled, acceleration_yout_scaled, acceleration_zout_scaled)
-        allrot = ("["+str(xrot)+", "+str(yrot)+", 180]")
+        allrot = ("["+str(-1 * yrot)+", "+str(xrot)+", 180]")
         f = open("/home/pi/Mpu-Webui/static/rpy.txt", "w")
         f.write(allrot)
         f.close()
-#    print(allrot)
+#        print(allrot)
         time.sleep(0.01)
     except KeyboardInterrupt:
         break
+
