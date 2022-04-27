@@ -1,2 +1,3 @@
 # Mpu-Webui
-A Flask HTTP server for displaying MPU6050 data by converting it to roll and pitch, and sending the degrees to a 3d model rendered client side.
+The code in this repository is used to run a homemade flight controller, based around the Raspberry Pi Zero 2 W.
+
