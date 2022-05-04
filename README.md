@@ -13,6 +13,10 @@ Our WIP Flight Controller
 
 ![alt text](https://github.com/Beaudog12345/Mpu-Webui/blob/main/images/IMG_2214.png?raw=true)
 
+Our Completed Flight Controller
+
+![alt text](https://github.com/Beaudog12345/Mpu-Webui/blob/main/images/IMG_2440.jpg?raw=true)
+
 A render of the 3D model in solidworks
 
 ![alt text](https://github.com/Beaudog12345/Mpu-Webui/blob/main/images/Screenshot%202022-01-05%20115216.png?raw=true)
