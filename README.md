@@ -8,12 +8,15 @@ The flight controller itself uses a 3d printed 2-part base. The raspberry pi is 
 RPY.py is ran in the background, and populates a text file with live gyro data from the MPU6050. Start.sh begins the flask web server, which has options to start, calibrate, and turn a GPIO pin on and off (in this case called motor, but could be used to toggle a status light). 
 
 # Images
+
 Our WIP Flight Controller
 
 ![alt text](https://github.com/Beaudog12345/Mpu-Webui/blob/main/images/IMG_2214.png?raw=true)
+
 A render of the 3D model in solidworks
 
 ![alt text](https://github.com/Beaudog12345/Mpu-Webui/blob/main/images/Screenshot%202022-01-05%20115216.png?raw=true)
+
 Our plane prototype
 
 ![alt text](https://github.com/Beaudog12345/Mpu-Webui/blob/main/images/IMG_2072.png?raw=true)
