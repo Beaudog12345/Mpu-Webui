@@ -9,8 +9,11 @@ RPY.py is ran in the background, and populates a text file with live gyro data f
 
 # Images
 Our WIP Flight Controller
+
 ![alt text](https://github.com/Beaudog12345/Mpu-Webui/blob/main/images/IMG_2214.png?raw=true)
 A render of the 3D model in solidworks
+
 ![alt text](https://github.com/Beaudog12345/Mpu-Webui/blob/main/images/Screenshot%202022-01-05%20115216.png?raw=true)
 Our plane prototype
+
 ![alt text](https://github.com/Beaudog12345/Mpu-Webui/blob/main/images/IMG_2072.png?raw=true)
